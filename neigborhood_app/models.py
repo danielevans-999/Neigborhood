@@ -2,19 +2,54 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-# Create your models here.
+
 class Neigborhood(models.Model):
     
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=150)
     occupants = models.PositiveIntegerField()
+    health_info = models.PositiveIntegerField()
+    police_contact = models.PositiveIntegerField()
+    admin = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    
+    def create_neigborhood(self):
+        self.save()
+        
+    def delete_neigborhood(self):
+        self.delete()
+        
+    @classmethod
+    def find_neigborhood(cls,id):
+        search = cls.objects.get(id = id)
+        return  search
+    
+    @classmethod   
+    def update_neigborhood(cls,id,new_name):
+        cls.objects.filter(pk = id).update(name=new_name)
+        new_name_object = cls.objects.get(name = new_name)
+        new_name = new_name_object.name
+        return new_name
+    
+    @classmethod
+    def update_occupants(cls,id,new_occupants):
+        cls.objects.get(pk = id).update(occupants=new_occupants)
+        new_occupants_object = cls.objects.get(pk__id = id)
+        new_occupants = new_name_object.occupants
+        return new_occupants
+    
+    def __str__(self):
+        return self.name
+        
+        
+        
     
     
 class UserProfile(models.Model):
     name = models.CharField(max_length=50)
     neigborhood = models.ForeignKey(Neigborhood,on_delete=models.CASCADE)
     bio = models.TextField()
-    profile_pic = models.ImageField(upload_to='images/')
+    profile_pic = models.ImageField(upload_to='images/', default='media/images/')
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     email = models.EmailField(max_length=100)
     
@@ -34,7 +69,7 @@ def save_profile(sender, instance,**kwargs):
     
 class Business(models.Model):
     name = models.CharField(max_length=100)
-    user = models.ForeignKey('User',on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     neigborhood = models.ForeignKey(Neigborhood, on_delete=models.CASCADE)
     email = models.EmailField(max_length=100)
     
@@ -61,7 +96,7 @@ class Business(models.Model):
     
     class Meta:
         
-        order_by = ['name']
+        ordering = ['name']
     
 class Post(models.Model):
     
@@ -69,6 +104,7 @@ class Post(models.Model):
     post = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    neigborhood = models.ForeignKey(Neigborhood,on_delete=models.CASCADE)
     
     
     def create_post(self):
@@ -88,3 +124,7 @@ class Post(models.Model):
     def get_single_post(cls,id):
         post = cls.objects.get(pk=id)
         return post
+    
+    
+    def __str__(self):
+        return self.title
