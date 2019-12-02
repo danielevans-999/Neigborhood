@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from . models import *
-from . forms import UpdateProfileForm
+from . forms import *
 
 def home(request):
     neigborhoods = Neigborhood.objects.all()
@@ -32,3 +32,19 @@ def update_profile(request):
     else:
         form = UpdateProfileForm(instance=request.user.userprofile)
         return render(request,'neigborhood/update_profile.html', {'form':form})
+    
+   
+def new_post(request,id):
+    current_user = request.user
+    hood = Neigborhood.objects.get(pk=id)
+    if request.method == 'POST':
+        form = PostUpload(request.POST,request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.neigborhood = hood
+            post.user = current_user
+            post.save()
+        return redirect('single',hood.id)
+    else:
+        form = PostUpload()
+        return render(request,'neigborhood/new_post.html',{"form":form,"hood":hood})

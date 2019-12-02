@@ -3,7 +3,8 @@
 <div class="container">
     <!--user profile info -->
     <div class="row justify-content-center">
-        <div class="col-sm-6 col-md-5" style="height: 450px; background-color: azure; position:sticky ; top: 0; z-index: 3;">
+        <div class="col-sm-6 col-md-5"
+            style="height: 300px; background-color: azure; position:sticky ; top: 0; z-index: 3;">
 
             <h5 class="user text-center">{{profile.user.username}}</h5>
             <img src="{{profile.profile_pic.url}}" class="img-thumbnail img-responsive img-fluid" alt=""
@@ -11,31 +12,40 @@
             <a href="{%url 'profileupdate'%}" class="btn btn-outline-info btn-sm">Edit Profile</a>
             <h3 class="">BIO</h3>
             <p>{{profile.bio | safe}}</p>
-            <p class=""><b>Firstname:</b> {{profile.First_Name}}</p>
-            <p><b>Lastname:</b> {{profile.Last_Name}}</p>
-            <p><b>Email:</b> {{profile.Email}}</p>
+            <p class=""><b>Name:</b> {{profile.name}}</p>
+            <p><b>Email:</b> {{profile.email}}</p>
         </div>
 
         <div class="col-sm-6 col-md-7">
 
-            <h3 class="text-center">My Projects</h3>
+            <h3 class="text-center">My posts</h3>
             <hr>
             <div class="row mt-2">
                 {% for post in posts %}
                 <div class="col-sm-12 col-md-6 col-lg-6">
-                    <img src="#" alt="" class="img-thumbnail img-responsive img-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <b>
+                                <h4 class="card-title">{{post.title}}</h4>
+                            </b>
+                            <small>
+                                <p>posted by: {{post.user.username}}</p>
+                            </small>
+                        </div>
+                        <div class="card body">
+                            <p>{{post.post}}</p>
+                        </div>
+                        <div class="card-footer">
+                            <blockquote class="blockquote-footer"> {{post.date_posted}}</blockquote>
+
+                        </div>
+                    </div>
                 </div>
                 {% endfor %}
 
             </div>
 
-            <div class="col-sm-6 col-md-5">
-
-
-
-                <!-- Edit Profile section -->
-
-            </div>
-
         </div>
-        {% endblock %}
+    </div>
+</div>
+{% endblock %}
