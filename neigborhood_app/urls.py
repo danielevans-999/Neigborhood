@@ -7,6 +7,7 @@ from django.urls import path
 urlpatterns = [
     
     path('', views.home, name='home'),
+    path('single_hood/<int:id>/', views.single_neigborhood,name='single'),
 ]
 
 
