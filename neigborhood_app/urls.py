@@ -8,6 +8,8 @@ urlpatterns = [
     
     path('', views.home, name='home'),
     path('single_hood/<int:id>/', views.single_neigborhood,name='single'),
+    path('profile/', views.profile_info,name='profile'),
+    path('update_profile/', views.update_profile,name='profileupdate'),
 ]
 
 
