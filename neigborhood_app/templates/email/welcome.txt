@@ -1,0 +1,4 @@
+
+Hello {{name}}
+
+Welcome to your new neigborhood . You will find the most exciting experinces in this website
