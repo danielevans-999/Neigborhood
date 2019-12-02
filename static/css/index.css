@@ -1,0 +1,11 @@
+body{
+    background-color: #4444;
+}
+
+.card:hover{
+    transition: all .6s ease-in-out;
+    opacity: .8;
+    transform: scale(.92);
+    cursor: pointer;
+    
+}
