@@ -46,7 +46,7 @@
                     <small><p>posted by: {{post.user.username}}</p></small>
                 </div>
                 <div class="card body">
-                    <p>{{post.post}}</p>
+                    <p>{{post.post | truncatechars:'100'}}</p>
                 </div>
                 <div class="card-footer">
                     <blockquote class="blockquote-footer"> {{post.date_posted}}</blockquote>

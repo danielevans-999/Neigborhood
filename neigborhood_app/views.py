@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from . models import *
 from . forms import *
+from . email import send_welcome_email
 
 def home(request):
     neigborhoods = Neigborhood.objects.all()
@@ -48,3 +49,11 @@ def new_post(request,id):
     else:
         form = PostUpload()
         return render(request,'neigborhood/new_post.html',{"form":form,"hood":hood})
+    
+def welcome_email(request):
+    
+    send_welcome_email(request.user.username, request.user.email)
+    
+    return render (request,'neigborhood/new_user.html')
+    
+    

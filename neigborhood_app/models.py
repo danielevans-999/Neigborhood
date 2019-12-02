@@ -34,9 +34,9 @@ class Neigborhood(models.Model):
     
     @classmethod
     def update_occupants(cls,id,new_occupants):
-        cls.objects.get(pk = id).update(occupants=new_occupants)
-        new_occupants_object = cls.objects.get(pk__id = id)
-        new_occupants = new_name_object.occupants
+        cls.objects.filter(pk = id).update(occupants=new_occupants)
+        new_occupants_object = cls.objects.get(pk = id)
+        new_occupants = new_occupants_object.occupants
         return new_occupants
     
     def __str__(self):
@@ -115,10 +115,10 @@ class Post(models.Model):
         self.delete()
         
     @classmethod   
-    def update_business(cls,id,post):
-        cls.objects.filter(pk = id).update(post=post)
-        new_post_object = cls.objects.filter(post__icontains = post)
-        new_post = new_post_object.post
+    def update_post(cls,id,post):
+        cls.objects.filter(pk = id).update(title=post)
+        new_post_object = cls.objects.get(pk = id)
+        new_post = new_post_object.title
         return new_post
     
     @classmethod
