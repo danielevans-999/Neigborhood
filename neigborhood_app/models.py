@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 class Neigborhood(models.Model):
     
     name = models.CharField(max_length=100)
+    pic = models.ImageField(upload_to='hoods/', default='media/hoods/lagoon.jpg')
     location = models.CharField(max_length=150)
     occupants = models.PositiveIntegerField()
     health_info = models.PositiveIntegerField()
