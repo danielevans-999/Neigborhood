@@ -3,4 +3,5 @@ from . models import *
 
 
 def home(request):
-    return render(request,'neigborhood/index.html')
+    neigborhoods = Neigborhood.objects.all()
+    return render(request,'neigborhood/index.html',{'neigborhoods':neigborhoods})
