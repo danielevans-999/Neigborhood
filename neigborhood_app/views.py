@@ -2,11 +2,13 @@ from django.shortcuts import render,redirect
 from . models import *
 from . forms import *
 from . email import send_welcome_email
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     neigborhoods = Neigborhood.objects.all()
     return render(request,'neigborhood/index.html',{'neigborhoods':neigborhoods})
 
+@login_required(login_url='/accounts/login/?next=/')   
 def single_neigborhood(request,id):
     single_hood = Neigborhood.objects.get(pk=id)
     business = single_hood.business_set.all
@@ -34,7 +36,7 @@ def update_profile(request):
         form = UpdateProfileForm(instance=request.user.userprofile)
         return render(request,'neigborhood/update_profile.html', {'form':form})
     
-   
+@login_required(login_url='/accounts/login/?next=/')      
 def new_post(request,id):
     current_user = request.user
     hood = Neigborhood.objects.get(pk=id)
